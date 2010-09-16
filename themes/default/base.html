@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+	{% block head %} {% endblock %}
+	<link rel="stylesheet" type="text/css" media="screen"  href="/static/style.css?{{setting.version}}" />
+	<link rel="stylesheet" type="text/css" media="screen" href="/static/gist/default.css" />
+	<link rel="alternate" type="application/atom+xml" title="xFox" href="/f/" />
+	<meta name="google-site-verification" content="Ubhn-Zhi5U_A1-tLu4dazbM6p9A3Sc03YGu5oT_FVIk" />
+</head>
+<body>
+	{% cache 3600 header user %}
+	<div id="header">
+		<div class="w960 clear" id="nav">
+			<h1 id="logo"><a title="{{setting.title}}" href="/"><span>{{setting.title}}</span></a></h1>
+            <ul>
+            	{% if user %}
+                <li><a href="/u/{{user.name}}/">{{user.name}}</a></li>
+				<li><a href="/a/setting/">设置</a>
+                <li><a href="/a/follow/" id="follow">Follow</a></li>
+				<li><a href="/g/">图片</a></li>
+                <li><a href="/a/mention/" id="mention">提醒</a></li>
+                <li><a href="/a/signout/">登出</a></li>
+                {% else %}
+                <li><a href="/a/signin/">登录</a></li>
+                <li><a href="/a/signup/">注册</a></li>
+                {% endif %}
+             </ul>
+		</div>
+	</div>
+	{% endcache %}
+	
+    <div id="body" class="w960">
+		{% block body %}{% endblock %}
+    </div>
+    
+    <div id="footer" class="w960">
+    	<p><a href="http://xfox.appspot.com">Powered by xFox</a>-{{setting.version}} <a href="/help/about/">About</a>
+		  <a href="/help/faq/">FAQ</a>
+		</p>
+    </div>
+</body>
+    <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>-->
+	<script src="/static/jquery-1.4.2.min.js"></script>
+    <script src="/static/bookmark.js?{{setting.version}}"></script>
+    <script src="/static/mention.js?{{setting.version}}"></script>
+    <script src="/static/comment.js?{{setting.version}}"></script>
+	<script src="/static/remind.js?{{setting.version}}"></script>
+	<script src="/static/follow.js?{{setting.version}}"></script>
+	<script src="/static/discussion.js?{{setting.version}}"></script>
+	<script src="/static/autosave.js?{{setting.version}}"></script>
+</html>

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{%block head %}
+<title>{{setting.title}} > Follow</title>
+{% endblock %}
+
+{%block body %}
+    	<div id="content" class="w680">
+			<div class="box radius">
+                <h3>最近Follow</h3>
+                <table class="list">
+                	<tr>
+                    	<td>帖子地址</td>
+                        <td>作者</td>
+						<td>日期</td>
+                        <td>操作</td>
+                    </tr>
+                    {% for follow in follows %}
+                    <tr>
+                    	<td><a href="{{follow.dis.url}}">{{follow.dis.title}}</a></td>
+                        <td><a href="/u/{{follow.dis.user_name}}/">{{follow.dis.user_name}}</a></td>
+						<td>{{follow.created|humdate}}</td>
+                        <td><a href="#{{follow.key}}" class="followhandler">删除</a></td>
+                    </tr>
+ 					{% endfor %}
+                </table>
+    		</div>
+        </div>
+     <!--sidebar include -->
+     {% include "sidebar.html" %}
+{% endblock %}

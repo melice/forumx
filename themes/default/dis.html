@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{%block head %}
+<title>{{setting.title}} > {{dis.tag_title}} > {{dis.title}}</title>
+<meta name="keywords" content="{{dis.tag_slug}},{{dis.tag_title}}" />
+{% endblock %}
+
+{%block body %}
+    	<div id="content" class="w680">
+        	<div class="box radius">
+            	<h2><a href="/{{dis.tag_slug}}/">{{dis.tag_title|escape}}</a> &gt; <a href="{{dis.url}}">{{dis.title|escape}}</a>
+                {% if user %}
+                {% if bookmark %}
+                <a href="/b/?key={{dis.key.name}}&action=un" class="bookmarked" id="bookmark"><span>*</span></a>
+                {% else %}
+                 <a href="/b/?key={{dis.key.name}}&action=do" class="bookmark" id="bookmark"><span>*</span></a>
+                {% endif %}
+                {% endif %}
+                </h2>
+            </div>
+            
+            <!-- content -->
+            <div class="box radius" id="article">
+            <p class="line1"><a href="/u/{{dis.user_name}}/">{{dis.user_name}}</a> Post at <span class="time">{{dis.created|humdate}}</span> {{disviews}} views
+			{% ifequal user.name dis.user_name %}
+			|<a href="/p/{{dis.tag_slug}}/{{dis.slug}}/">编辑</a>
+			|<a href="#{{dis.key}}" class="closehandler">关闭讨论</a>
+			{% endifequal %}</p>
+            {{dis.content_formated}}
+            </div>
+            
+            <!--comment-->
+            {% if comments %}
+            <div class="box radius" id="comment_place">
+            <h3>讨论</h3>
+            {% for comment in comments %}
+            <div class="comment radius" id="r-{{comment.key.name}}">
+            	<div class="header">
+                #{{forloop.counter|humfloor:p}}  <strong><a href="/u/{{comment.user_name}}/">{{comment.user_name}}</a></strong><span class="time">{{comment.created|humdate}}</span>
+                </div>
+                {{comment.content_formated}}
+            </div>
+			{% endfor %}
+
+            <div class="box radius">
+				{% if prev %}<a class="prev" href="{{dis.url}}{% ifequal prev 1 %}{% else %}{{prev}}/{% endifequal %}">前一页</a> {% endif %}
+                {% if next %}<a class="next" href="{{dis.url}}{{next}}/">后一页</a> {% endif %}
+            </div>
+            </div>
+			{% else %}
+			 <div class="box radius" id="comment_place">
+			 	<h3>还没有评论</h3>
+			</div>
+            {% endif %}
+            
+            {% if user %}
+			{% if dis.is_closed %}
+			<div class="box radius clear" id="comment_handler">
+				<p>评论已经被关闭啦，嘻嘻</p>
+			</div>
+			{% else %}
+            <div class="box radius clear" id="comment_handler" >
+                <h3>添加评论吧</h3>
+                <form method="post" action="/c/" id="comment_form" >
+                <input type="hidden" name="key" value="{{dis.key.name}}" />
+                <p>
+                    <textarea class="input_box" cols="100" rows="6" name="content" ></textarea>
+                </p>
+                <p id="info"></p>
+                <p>
+                    <input type="submit" value="发表" class="button radius" id="submit"/>
+                </p>
+                </form>
+            </div>			
+			{% endif %}
+            {% endif %}
+        </div>
+     <!--sidebar include -->
+     {% include "sidebar.html" %}
+{% endblock %}

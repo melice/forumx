@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{%block head %}
+<title>{{setting.title}} > 主页</title>
+<meta name="keywords" content="{{setting.key_words}}" />
+<meta name="description" content="{{setting.description}}" />
+{% endblock %}
+
+{%block body %}
+
+    	<div id="content" class="w680">
+    	{% cache 60 index %}
+		<div class = "box radius">
+			<h3>最近主题</h3>
+			<table class ="list">
+            	<tr>
+                    <td class="title">标题</th>
+                    <td class="author">回复</th>
+                    <td class="date">最后回复</th>
+                </tr>
+                {% for dis in diss %}
+                <tr>
+                    <td class="title"><a href="{{dis.url}}">{{dis.title}}</a>
+					[<a href="/{{dis.tag_slug}}/">{{dis.tag_title}}</a>]
+					{% if dis.count_comment %}(+{{dis.count_comment}}){% endif %}
+					</td>
+                    <td class="author">
+                    {% if dis.last_comment_by %}
+					<a href="/u/{{dis.last_comment_by}}/">{{dis.last_comment_by}}</a>
+					{% else %}
+					 <a href="/u/{{dis.user_name}}/">{{dis.user_name}}</a>
+					{% endif %}
+					</td>
+                    <td class="date">{{dis.last_comment|humdate}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+			
+		</div>
+		
+		<div class="box radius">
+			<h3>最近收藏</h3>
+			<ul id="bookmark_list">
+				{% for bookmark in bookmarks %}
+				<li class="{{forloop.counter|humcolor}}"><a href="/u/{{bookmark.user_name}}/">{{bookmark.user_name}}</a>
+				收藏了
+				<a href="{{bookmark.dis_url}}" rel="bookmark">{{bookmark.dis_title}}</a> <span class="date">{{bookmark.created|humdate}}</span></li>
+                {% endfor %}		
+			</ul>
+		</div>
+	   {% endcache %}
+		
+		{% filecache 600 cateogry %}
+		<div class="box radius">
+			<h3>讨论区导航|<a href="/add-tag/">添加讨论区</a></h3>
+			<table class="list">
+				{% for cat in cats %}
+				    <tr>
+				    	<td align="right">{{cat.title}}:</td>
+						<td width="90%" align="left">{% for tag in cat.tags %}<a href="{{tag.url}}" >{{tag.title}} </a>{% endfor %}</td>
+				    </tr>
+				{% endfor %}
+			</table>
+		</div>
+		{% endfilecache %}
+        </div>
+	  
+     <!--sidebar include -->
+     {% include "sidebar.html" %}
+{% endblock %}
