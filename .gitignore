@@ -5,6 +5,7 @@ static/a.jpg
 static/sitemap.xml
 *.pyc
 *.pyo
+*.bak
 app.yaml
 bbs.wpr
 *~

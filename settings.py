@@ -11,8 +11,8 @@ DEBUG = True
 #settings for google storage
 gs_access_key_id =""
 gs_secret_access_key=""
-cname ="http://g.xfox.us"
-bucket_name = "g.xfox.us"
+cname ="http://g.akira.us"
+bucket_name = "g.akira.us"
 
 #role
 ROLE= {
@@ -25,11 +25,11 @@ ROLE= {
 #xFox Setting
 
 class Setting():
-    title = "xFox"
-    description = u"xFox -变异的狐狸"
-    key_words = u"xFox"
+    title = "Akira"
+    description = u"Akira"
+    key_words = u"Akira"
     
-    domain = "http://xfox.appspot.com"
+    domain = "http://xfoxforum.appspot.com"
     timedelta = 0.8
     version = "0.1.2"
     theme = "default"

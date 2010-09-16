@@ -20,7 +20,8 @@ from dash.models import Counter
 from discussion.models import Tag,Discussion,Comment,Bookmark,Category
 from dash.models import Counter,MemcacheStatus
 from account.models import User
-
+from dash.mem_counter import CounterModel
+import dash.mem_counter
 
 class MainHandler(PublicWithSidebarHandler):
 
@@ -29,6 +30,9 @@ class MainHandler(PublicWithSidebarHandler):
         self.template_value['diss'] = Discussion.get_recent()
         self.template_value['bookmarks'] = Bookmark.all().order('-created').fetch(10)
         self.template_value['cats'] =  Category.get_all()
+        dash.mem_counter.incrementCounter('visitors')
+        self.template_value['count'] =  CounterModel.get_by_key_name('visitors').counter
+        
         self.render('index.html')
     
 class UpdateHandler(PublicHandler):
@@ -56,7 +60,7 @@ def main():
                                         ('/', MainHandler),
                                         ('/e/',UpdateHandler),
                                         ('/s/mem/',MemcacheHandler),
-                                        ('/.*',NotFoundHandler),
+                                        #('/.*',NotFoundHandler),
                                         ],
                                          debug=settings.DEBUG)
 #    util.run_wsgi_app(application)

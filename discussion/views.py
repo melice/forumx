@@ -53,7 +53,9 @@ class DiscussionHandler(PublicWithSidebarHandler):
             memcache.set(":visitlogs:",logs,3600)
         
         self.template_value['f_tag']={'key':dis.tag_slug,'title':dis.tag_title,'show':'G' in dis.role,'post':True}
-        self.template_value['disviews']=ShardCount.get_increment_count("disviews:"+key,"disviews")
+        #self.template_value['disviews']=
+        dis.count_view = ShardCount.get_increment_count("disviews:"+key,"disviews")
+        dis.put()
         self.template_value['dis']=dis
         bookmark = Bookmark.get_bookmark(self.user,dis) if self.user else None
         self.template_value['bookmark'] = bookmark

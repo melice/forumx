@@ -20,7 +20,7 @@
             
             <!-- content -->
             <div class="box radius" id="article">
-            <p class="line1"><a href="/u/{{dis.user_name}}/">{{dis.user_name}}</a> Post at <span class="time">{{dis.created|humdate}}</span> {{disviews}} views
+            <p class="line1"><a href="/u/{{dis.user_name}}/">{{dis.user_name}}</a> Post at <span class="time">{{dis.created|humdate}}</span> {{dis.count_view}} views
 			{% ifequal user.name dis.user_name %}
 			|<a href="/p/{{dis.tag_slug}}/{{dis.slug}}/">编辑</a>
 			|<a href="#{{dis.key}}" class="closehandler">关闭讨论</a>

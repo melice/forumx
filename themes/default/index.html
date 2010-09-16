@@ -1,16 +1,29 @@
 {% extends "base.html" %}
 {%block head %}
-<title>{{setting.title}} > 主页</title>
+<title> {{setting.title}} > 主页</title>
 <meta name="keywords" content="{{setting.key_words}}" />
 <meta name="description" content="{{setting.description}}" />
 {% endblock %}
 
 {%block body %}
 
+<script language="javascript">
+window.onload=function showtable(){
+var tablename=document.getElementById("topics");
+var li=tablename.getElementsByTagName("tr");
+for (var i=0;i<=li.length;i++){
+if (i%2==0){
+li[i].style.backgroundColor="#EEEEEE";
+}else li[i].style.backgroundColor="#FFFFFF";
+}
+}
+</script>
+
     	<div id="content" class="w680">
 		{% filecache 600 cateogry %}
 		<div class="box radius">
-			<h3>讨论区导航|<a href="/add-tag/">添加讨论区</a></h3>
+			<h3>讨论区导航</h3>
+			
 			<table class="list">
 				{% for cat in cats %}
 				    <tr>
@@ -25,27 +38,33 @@
     	{% cache 60 index %}
 		<div class = "box radius">
 			<h3>最近主题</h3>
-			<table class ="list">
+			<table class ="list" id = "topics">
             	<tr>
+            				<td class="clicks">点击</th>
+            				<td class="replies">回复</th>
                     <td class="title">标题</th>
-                    <td class="author">回复</th>
+                    <td class="author">作者</th>
                     <td class="date">最后回复</th>
                 </tr>
                 {% for dis in diss %}
                 <tr>
-                    <td class="title"><a href="{{dis.url}}">{{dis.title}}</a>
-					[<a href="/{{dis.tag_slug}}/">{{dis.tag_title}}</a>]
-					{% if dis.count_comment %}(+{{dis.count_comment}}){% endif %}
-					</td>
-                    <td class="author">
-                    {% if dis.last_comment_by %}
-					<a href="/u/{{dis.last_comment_by}}/">{{dis.last_comment_by}}</a>
-					{% else %}
-					 <a href="/u/{{dis.user_name}}/">{{dis.user_name}}</a>
-					{% endif %}
-					</td>
-                    <td class="date">{{dis.last_comment|humdate}}</td>
+                    <td class="clicks">{{dis.count_view}}</td>
+            				<td class="replies">{{dis.count_comment}}</td>
+            				
+                    <td class="title">
+                    	[<a href="/{{dis.tag_slug}}/">{{dis.tag_title}}</a>]
+                    	<a href="{{dis.url}}">{{dis.title}}</a>
+					         </td>
+                   <td class="author">
+                      <a href="/u/{{dis.user_name}}/">{{dis.user_name}}</a>
+                   </td>
+                   <td class="date">{{dis.last_comment|humdate}}                    	
+                      {% if dis.last_comment_by %}
+					              <a href="/u/{{dis.last_comment_by}}/">{{dis.last_comment_by}}</a>			
+					             {% endif %}
+                   </td>
                 </tr>
+                
                 {% endfor %}
             </table>
 			

@@ -204,8 +204,9 @@ class Discussion(db.Expando):
     last_comment_by = db.StringProperty()
     last_comment = db.DateTimeProperty(auto_now_add=True)
    
-    count_bookmark=db.IntegerProperty(default=0)
+    count_bookmark = db.IntegerProperty(default=0)
     count_comment = db.IntegerProperty(default=0)
+    count_view = db.IntegerProperty(default=0) 
     
     source = db.StringProperty(required=False)
     is_draft = db.BooleanProperty(default =False)
@@ -394,6 +395,7 @@ class Comment(db.Model):
         if not self.is_saved():
             self.dis.last_comment_by = self.user.name
             self.dis.last_comment = datetime.datetime.now()
+            self.dis.count_comment =  self.dis.count_comment + 1
             self.dis.put()
             self.user_name = self.user.name
             self.dis_slug = self.dis.url

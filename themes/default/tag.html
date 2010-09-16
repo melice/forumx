@@ -9,6 +9,20 @@
 {% endblock %}
 
 {%block body %}
+
+<script language="javascript">
+window.onload=function showtable(){
+var tablename=document.getElementById("topics");
+var li=tablename.getElementsByTagName("tr");
+for (var i=0;i<=li.length;i++){
+if (i%2==0){
+li[i].style.backgroundColor="#EEEEEE";
+}else li[i].style.backgroundColor="#FFFFFF";
+}
+}
+</script>
+
+
     	<div id="content" class="w680">
         	<div class="box radius">
             	<h2><a href="{{tag.url}}">{{tag.title|escape}}</a></h2>
@@ -18,17 +32,25 @@
             </div>
             <!-- content -->
             <div class="box radius">
-			<table class ="list">
+			<table class ="list" id = "topics">
             	<tr>
+            				<td class="clicks">点击</th>
+            				<td class="replies">回复</th>
                     <td class="title">标题</th>
                     <td class="author">作者</th>
                     <td class="date">最后回复</th>
                 </tr>
                 {% for dis in diss %}
-                <tr>
-                    <td class="title"><a href="{{dis.url}}">{{dis.title}}</a>{% if dis.count_comment %}(+{{dis.count_comment}}){% endif %}</td>
+                <tr>                  
+                    <td class="clicks">{{dis.count_view}}</td>
+            				<td class="replies">{{dis.count_comment}}</td>           				
+                    <td class="title"><a href="{{dis.url}}">{{dis.title}}</a></td>
                     <td class="author"><a href="/u/{{dis.user_name}}/">{{dis.user_name}}</a></td>
-                    <td class="date">{{dis.last_comment|humdate}}</td>
+                    <td class="date">{{dis.last_comment|humdate}}                    	
+                      {% if dis.last_comment_by %}
+					              <a href="/u/{{dis.last_comment_by}}/">{{dis.last_comment_by}}</a>			
+					             {% endif %}
+                    </td>            
                 </tr>
                 {% endfor %}
             </table>
