@@ -55,7 +55,7 @@
             {% if user %}
 			{% if dis.is_closed %}
 			<div class="box radius clear" id="comment_handler">
-				<p>评论已经被关闭啦，嘻嘻</p>
+				<p>评论已经被关闭啦</p>
 			</div>
 			{% else %}
             <div class="box radius clear" id="comment_handler" >
@@ -63,11 +63,11 @@
                 <form method="post" action="/c/" id="comment_form" >
                 <input type="hidden" name="key" value="{{dis.key.name}}" />
                 <p>
-                    <textarea class="input_box" cols="100" rows="6" name="content" ></textarea>
+                    <textarea class="input_box" cols="50" rows="4" name="content" ></textarea>
                 </p>
                 <p id="info"></p>
                 <p>
-                    <input type="submit" value="发表" class="button radius" id="submit"/>
+                    <input type="submit" value=" 发表 " id="submit"/>
                 </p>
                 </form>
             </div>			

@@ -21,7 +21,8 @@ from dash.counter import ShardCount
 
 
 def get_markdown(value):
-    return markdown.Markdown(safe_mode="escape").convert(value)
+    return markdown.Markdown(safe_mode="escape", output_format='html4').convert(value)
+    #return markdown.markdown(value, ['codehilite(force_linenos=True)'], safe_mode="escape")
 
 FORMAT_METHOD = {
     'M':get_markdown,
@@ -245,6 +246,8 @@ class Discussion(db.Expando):
             memcache.delete("dis:%s"%(self.key().name()))
         #hander format
         self.content_formated = FORMAT_METHOD.get('M',get_markdown)(self.content)
+        #self.content_formated = get_markdown(self.content)
+        
         super(Discussion,self).put()
     
     def delete(self):
