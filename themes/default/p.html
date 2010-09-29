@@ -4,7 +4,7 @@
 {% endblock %}
 
 {%block body %}
-    <div id="p_form">
+    <div id="p_form"  class="w680">
            <h3>在 <a href="{{tag.url}}">{{tag.title}}</a> 发表讨论</h3>
         	<form method="post" class="radius" action="/p/{{tag.key.name}}/">
 			<p>
@@ -13,11 +13,11 @@
             </p>
             <p>
             <label for="content">内容</label>
-            <textarea class="input_box radius" cols="100" rows="6" name="content" id="content" >{% if content %}{{content}}{% endif %}</textarea>
-            </p>
+            <textarea class="input_box radius" cols="80" rows="15" name="content" id="content" >{% if content %}{{content}}{% endif %}</textarea>
+            </p><br>
             <p>
             <label for="slug">slug:[a-z0-9-]{1-10}，可以留空</label>
-			<input type="text" class="input_box radius" name="slug" id="check_slug">
+			      <input type="text" class="input_box radius" name="slug" id="check_slug">
             </p>
             {% if error %}
             <p>{{error}}</p>
@@ -25,8 +25,8 @@
             <p style="visibility:hidden">dd</p>
             {% endif %}
             <p>
-            <input type="submit" value="提交" class="button radius" />
-			<input type="button" value="Clear" class="button radius" id="btn_clear" />
+            <input type="submit" value="提交" />            
+			      <input type="button" value="Clear" class="button radius" id="btn_clear" />
             </p>
         </form>
         </div>

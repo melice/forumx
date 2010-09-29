@@ -4,7 +4,7 @@
 {% endblock %}
 
 {%block body %}
-    <div id="p_form">
+    <div id="p_form"  class="w680">
            <h3>修改 <a href="{{dis.url}}">{{dis.title}}</a></h3>
         	<form method="post" class="radius" action="/p{{dis.url}}">
             <input type="hidden" value="{{dis.key.name}}" name="key" />
@@ -14,16 +14,16 @@
             </p>
             <p>
             <label for="content">内容</label>
-            <textarea class="input_box radius" cols="100" rows="6" name="content" id="content" >{{dis.content|escape}}</textarea>
+            <textarea class="input_box radius" cols="80" rows="15" name="content" id="content" >{{dis.content|escape}}</textarea>
             </p>
             {% if error %}
             <p>{{error}}</p>
             {% else %}
             <p style="visibility:hidden">dd</p>
             {% endif %}
-       
+            <br> 
             <p>
-            <input type="submit" value="提交" class="button radius" />
+            <input type="submit" value="提交"  />
             </p>
         </form>
         </div>
